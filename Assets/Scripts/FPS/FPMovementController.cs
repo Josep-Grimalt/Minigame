@@ -26,4 +26,5 @@ public class FPMovementController : MonoBehaviour
 
         cc.Move(speed * Time.deltaTime * movement);
     }
+
 }

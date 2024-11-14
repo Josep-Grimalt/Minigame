@@ -3,14 +3,13 @@ using UnityEngine.AI;
 
 public class StateMachine : MonoBehaviour
 {
-
-    [SerializeField] private Transform point;
     private NavMeshAgent agent;
     private Vector3 patrolPos;
     private GameObject target;
     private State state;
     private float timer = 0;
     private SMVision fov;
+
     private enum State
     {
         wait,
@@ -49,12 +48,11 @@ public class StateMachine : MonoBehaviour
 
     private void Wait()
     {
-        Debug.Log("Waiting...");
         agent.isStopped = true;
 
         timer += Time.deltaTime;
 
-        if (timer >= 1)
+        if (timer >= 2.2)
         {
             timer = 0;
             state = State.patrol;
@@ -63,10 +61,9 @@ public class StateMachine : MonoBehaviour
 
     private void Patrol()
     {
-        Debug.Log("Patrolling...");
         agent.isStopped = false;
 
-        patrolPos = point.position;
+        patrolPos = target.transform.position;
         agent.SetDestination(patrolPos);
         agent.velocity.Set(0, 0, 3.5f);
 
@@ -75,8 +72,6 @@ public class StateMachine : MonoBehaviour
 
     private void Chase()
     {
-        Debug.Log("Chasing...");
-
         agent.SetDestination(target.transform.position);
         agent.velocity.Set(0, 0, 7);
         if (!fov.canSeePlayer || Vector3.Distance(transform.position, target.transform.position) < 1)
@@ -86,11 +81,24 @@ public class StateMachine : MonoBehaviour
     private void FindTarget()
     {
         if (target == null)
+        {
+            state = State.wait;
             return;
+        }
 
         if (fov.canSeePlayer)
         {
             state = State.chase;
         }
+    }
+
+    public bool IsChasing()
+    {
+        return state.Equals(State.chase);
+    }
+
+    public float GetSpeed()
+    {
+        return agent.velocity.magnitude;
     }
 }
