@@ -7,12 +7,10 @@ public class StateMachine : MonoBehaviour
     private Vector3 patrolPos;
     private GameObject target;
     private State state;
-    private float timer = 0;
     private SMVision fov;
 
     private enum State
     {
-        wait,
         patrol,
         chase
     }
@@ -27,16 +25,13 @@ public class StateMachine : MonoBehaviour
     private void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player");
-        state = State.wait;
+        state = State.patrol;
     }
 
     private void Update()
     {
         switch (state)
         {
-            case State.wait:
-                Wait();
-                break;
             case State.patrol:
                 Patrol();
                 break;
@@ -45,24 +40,8 @@ public class StateMachine : MonoBehaviour
                 break;
         }
     }
-
-    private void Wait()
-    {
-        agent.isStopped = true;
-
-        timer += Time.deltaTime;
-
-        if (timer >= 2.2)
-        {
-            timer = 0;
-            state = State.patrol;
-        }
-    }
-
     private void Patrol()
     {
-        agent.isStopped = false;
-
         patrolPos = target.transform.position;
         agent.SetDestination(patrolPos);
         agent.velocity.Set(0, 0, 3.5f);
@@ -75,14 +54,14 @@ public class StateMachine : MonoBehaviour
         agent.SetDestination(target.transform.position);
         agent.velocity.Set(0, 0, 7);
         if (!fov.canSeePlayer || Vector3.Distance(transform.position, target.transform.position) < 1)
-            state = State.wait;
+            state = State.patrol;
     }
 
     private void FindTarget()
     {
         if (target == null)
         {
-            state = State.wait;
+            state = State.patrol;
             return;
         }
 
@@ -95,10 +74,5 @@ public class StateMachine : MonoBehaviour
     public bool IsChasing()
     {
         return state.Equals(State.chase);
-    }
-
-    public float GetSpeed()
-    {
-        return agent.velocity.magnitude;
     }
 }

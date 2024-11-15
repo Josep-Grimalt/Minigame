@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class CollisionController : MonoBehaviour
 {
+    [SerializeField] private GameObject jumpscare;
     private GameManager gm;
 
     private void Awake() {
@@ -23,7 +24,14 @@ public class CollisionController : MonoBehaviour
         
         if (other.gameObject.CompareTag("StateMachine"))
         {
-            SceneManager.LoadScene(0);
+            StartCoroutine(EndGame());
         }
+    }
+
+    private IEnumerator EndGame()
+    {
+        jumpscare.SetActive(true);
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 }

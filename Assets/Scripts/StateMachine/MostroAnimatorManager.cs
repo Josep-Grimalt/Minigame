@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MostroAnimatorController : MonoBehaviour
+public class MostroAnimatorManager : MonoBehaviour
 {
     private Animator animator;
     private StateMachine sm;
@@ -18,6 +18,5 @@ public class MostroAnimatorController : MonoBehaviour
     void Update()
     {
         animator.SetBool("isChasing", sm.IsChasing());
-        animator.SetFloat("speed", sm.GetSpeed());
     }
 }
