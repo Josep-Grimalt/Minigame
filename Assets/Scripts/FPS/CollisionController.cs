@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class CollisionController : MonoBehaviour
 {
     [SerializeField] private GameObject jumpscare;
+    [SerializeField] private AudioClip clip;
     private GameManager gm;
+    private CharacterController cc;
 
     private void Awake() {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        cc = GetComponent<CharacterController>();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -31,7 +34,9 @@ public class CollisionController : MonoBehaviour
     private IEnumerator EndGame()
     {
         jumpscare.SetActive(true);
-        yield return new WaitForSeconds(1);
+        cc.enabled = false;
+
+        yield return new WaitForSeconds(clip.length - 1);
         SceneManager.LoadScene(0);
     }
 }

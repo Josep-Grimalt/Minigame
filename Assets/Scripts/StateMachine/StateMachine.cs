@@ -44,7 +44,7 @@ public class StateMachine : MonoBehaviour
     {
         patrolPos = target.transform.position;
         agent.SetDestination(patrolPos);
-        agent.velocity.Set(0, 0, 3.5f);
+        agent.velocity.Set(0, 0, 5f);
 
         FindTarget();
     }
@@ -52,7 +52,7 @@ public class StateMachine : MonoBehaviour
     private void Chase()
     {
         agent.SetDestination(target.transform.position);
-        agent.velocity.Set(0, 0, 7);
+        agent.velocity.Set(0, 0, 10);
         if (!fov.canSeePlayer || Vector3.Distance(transform.position, target.transform.position) < 1)
             state = State.patrol;
     }
@@ -74,5 +74,10 @@ public class StateMachine : MonoBehaviour
     public bool IsChasing()
     {
         return state.Equals(State.chase);
+    }
+
+    public bool HasHunt()
+    {
+        return Vector3.Distance(transform.position, target.transform.position) > .5f;
     }
 }
