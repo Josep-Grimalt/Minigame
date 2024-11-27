@@ -93,17 +93,6 @@
                 },
                 {
                     "name": "",
-                    "id": "ef811d06-d385-423f-bdb6-2ddfc80a5c45",
-                    "path": "<Gamepad>/dpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bdea89b2-971b-45e3-9770-a883c527bc2f",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -117,6 +106,17 @@
                     "name": "",
                     "id": "139565f1-13f3-4092-a1c6-dfbd45a74985",
                     "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc4651d3-e60f-4bba-89cf-d979f8f07a4e",
+                    "path": "<Gamepad>/dpad",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
