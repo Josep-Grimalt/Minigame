@@ -13,7 +13,7 @@ public class PlayerInputActionsHandler : MonoBehaviour
     private void Awake()
     {
         movementController = GetComponent<FPMovementController>();
-        lookController = GetComponent<LookController>();
+        lookController = GetComponentInChildren<LookController>();
     }
 
     private void OnEnable() {
